@@ -1,7 +1,7 @@
 package packageWWOCAR;
 
 public class Venda {
-    // Atributos
+    // Atributos (Encapsulamento)
    private Double valorVenda;
    private String codigoVenda;
    
@@ -26,3 +26,4 @@ public class Venda {
     }
             
 }
+
