@@ -1,7 +1,7 @@
 package packageWWOCAR;
 
-public class Coordenador extends Venda {
-   // Atributos
+public class Coordenador extends Venda { // herança
+   // Atributos (Encapsulamento)
     private String nome;
     private String codigoCordenador;
     
@@ -25,3 +25,4 @@ public class Coordenador extends Venda {
         return this.getValorVenda() * 0.90;
     }
 }
+
