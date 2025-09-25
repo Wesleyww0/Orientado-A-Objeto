@@ -1,7 +1,7 @@
 package packageWWOCAR;
 
 public class Cliente {
-    // Atributos
+    // Atributos (Encapsulamento)
     private String nome;
     private String codigoCliente;
     private String pagamento;
@@ -28,3 +28,4 @@ public class Cliente {
     this.pagamento = pagamento;
 }
 }
+
