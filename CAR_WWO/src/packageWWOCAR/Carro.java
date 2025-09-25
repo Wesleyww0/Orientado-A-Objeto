@@ -2,7 +2,7 @@
 package packageWWOCAR;
 
 public class Carro {
-    // Atributos
+    // Atributos ( encapsulamento )
    private String nomeDoCarro;
    private String marcaDoCarro;
    private String corDoCarro;
@@ -58,3 +58,4 @@ public class Carro {
     this.sinistro = sinistro;
 }
 }
+
