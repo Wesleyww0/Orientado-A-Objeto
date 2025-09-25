@@ -1,7 +1,7 @@
 package packageWWOCAR;
 
-public class Vendedor extends Venda {
-    // Atributos
+public class Vendedor extends Venda { // herança
+    // Atributos (encapsulamento )
     private String nome;
     private String codigoVendedor;
     
@@ -22,3 +22,4 @@ public class Vendedor extends Venda {
 }
     
 }
+
