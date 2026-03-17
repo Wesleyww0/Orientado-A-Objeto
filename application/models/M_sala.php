@@ -83,7 +83,7 @@ class M_sala extends CI_Model
         } catch (Exception $e) {
             $dados = array(
                         'codigo' => 0,
-                        'msg' =>'ATENÇÂO: o seguinte erro aconteceu -> ' . $e->getMenssage()
+                        'msg' =>'ATENÇÂO: o seguinte erro aconteceu -> ' . $e->getMessage()
                     );
         }
         //Envia o array $dados c as info tratadas

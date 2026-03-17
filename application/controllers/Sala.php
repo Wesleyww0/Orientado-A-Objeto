@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-class Sala extends CT_Controller{
+class Sala extends CI_Controller{
     // Validação dos tipos de retorno das valçidações ( Codihgo de erro )
     //1 Operação realizada
     //2 conteudo nulo/vazio
@@ -89,10 +89,10 @@ class Sala extends CT_Controller{
                 $erros[] = ['codigo' => 99, 'msg' => 'Campos inexistentes ou incorretos no FrontEnd'];                
             }else{
                 //Validade campos qt ao tipo de dados e tamanho (helper)
-                $retornoCodigo = verificaParam($resultado->codigo,'int',true);
-                $retornoDescricao = verificaParam($resultado->descricao,'string',true);
+                $retornoCodigo = validarDados($resultado->codigo,'int',true);
+                $retornoDescricao = validarDados($resultado->descricao,'string',true);
                 $retornoAndar = validarDados($resultado->andar,'int',true);
-                $retornoCapacidade = verificaParam($resultado->capacidade,'int',true);
+                $retornoCapacidade = validarDados($resultado->capacidade,'int',true);
 
                 if($retornoCodigo['codigoHelper'] !=0){
                     $erros[] = ['codigo'=> $retornoCodigo['codigoHelper'],
