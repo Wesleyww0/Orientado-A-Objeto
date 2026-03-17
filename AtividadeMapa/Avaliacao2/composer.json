@@ -1,0 +1,14 @@
+{
+    "name": "me/novapasta",
+    "description": "Projeto de teste com mailler",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Wesley",
+            "email": "wesleywwo@hotmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^7.0"
+    }
+}
