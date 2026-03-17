@@ -23,7 +23,7 @@ class M_sala extends CI_Model
                                values ($codigo, '$descricao', $andar, $capacidade)");
 
              // verifica se a inserção ocorreu com sucesso
-             if ($this->db->affected_row() > 0){
+             if ($this->db->affected_rows() > 0){
                 $dados = array(
                     'codigo' => 1,
                     'msg' => 'Sala cadastrada corretamente'
