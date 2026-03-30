@@ -1,0 +1,186 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Mapa Da Sala
+meta:
+  id: wrk_8bb39ccf14234a3cb04b8f6a90a887bf
+  created: 1773744622309
+  modified: 1773744673156
+  description: ""
+collection:
+  - url: ""
+    name: My first request
+    meta:
+      id: req_1e05f4bc6fa0492ba2b87fe223e533e3
+      created: 1773744622437
+      modified: 1773744622437
+      isPrivate: false
+      description: ""
+      sortKey: -1773744622437
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - name: Sala
+    meta:
+      id: fld_b993366095be46baa18be6b8a89b04ac
+      created: 1773744714076
+      modified: 1774892021738
+      sortKey: -1773744714076
+      description: ""
+    children:
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Sala/inserir
+        name: inserir
+        meta:
+          id: req_56f456fa576a4ff39144d68501ec94dd
+          created: 1773744726607
+          modified: 1774883322605
+          isPrivate: false
+          description: ""
+          sortKey: -1773744726607
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "17",
+            	"descricao" : "Sala do Wwy",
+            	"andar" : "2",
+            	"capacidade" : "500"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Sala/consultar
+        name: consultar
+        meta:
+          id: req_b32c89b17930422e8f5645c841260bc9
+          created: 1774881287114
+          modified: 1774892879484
+          isPrivate: false
+          description: ""
+          sortKey: -1774881287114
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "15",
+            	"descricao" : "",
+            	"andar" : "",
+            	"capacidade" : ""
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Sala/alterar
+        name: alterar
+        meta:
+          id: req_e8fb73a1f9d44fae89bf5a9e4dea64af
+          created: 1774892039652
+          modified: 1774892635621
+          isPrivate: false
+          description: ""
+          sortKey: -1774892039652
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "15",
+            	"descricao" : "ss",
+            	"andar" : "",
+            	"capacidade" : ""
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Sala/desativar
+        name: desativar
+        meta:
+          id: req_43c203f43a994575b0f925880ed464e1
+          created: 1774892765056
+          modified: 1774892858474
+          isPrivate: false
+          description: ""
+          sortKey: -1774892765056
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "15"	
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_b8d47d1d62663e6ba2bfd5173f439ae67ef682a9
+    created: 1773744622313
+    modified: 1773744622313
+environments:
+  name: Base Environment
+  meta:
+    id: env_b8d47d1d62663e6ba2bfd5173f439ae67ef682a9
+    created: 1773744622311
+    modified: 1773744622311
+    isPrivate: false
