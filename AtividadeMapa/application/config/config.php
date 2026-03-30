@@ -23,11 +23,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-<<<<<<< HEAD:AtividadeMapa/application/config/config.php
-$config['base_url'] = 'http://localhost/AtividadeMapa';
-=======
-$config['base_url'] = 'http://localhost/AtividadeMapa/AtividadeMapa';
->>>>>>> dc756ab1fb0ab9ae061b73d41dea34601ad1313a:application/config/config.php
+
+$config['base_url'] = 'http://localhost/DesenvolvimentoParaServidores/AtividadeMapa';
 
 /*
 |--------------------------------------------------------------------------
