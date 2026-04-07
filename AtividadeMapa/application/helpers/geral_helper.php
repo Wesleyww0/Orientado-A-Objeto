@@ -65,7 +65,7 @@ function validarDados($valor, $tipo, $tamanhoZero = true)
             break;
         case 'hora':
             //Verifico se tem padrão de hora
-            if (preg_match('/^(?:[01]\d[2[0-3]):[0-5]\d$/', $valor)) {
+            if (!preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $valor)) {
                 return array('codigoHelper' => 7, 'msg' => 'Hora em formato inválido.');
             }
             break;
@@ -125,6 +125,8 @@ function validarDadosConsulta($valor, $tipo){
     Função para verificar se datas ou horários iniciais são maiores
     entre eles
     */
+    
+    
     function compararDataHora($valorInicial, $valorFinal, $tipo) {
         // Passamos a string para hora
         $valorInicial = strtotime($valorInicial);

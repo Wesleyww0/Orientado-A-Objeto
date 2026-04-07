@@ -74,7 +74,8 @@ class Horario extends CI_Controller
 
     public function setEstatus($estatusFront)
     {
-        $this->tipoUsuario = $estatusFront;
+        //$this->tipoUsuario = $estatusFront;
+        $this->estatus = $estatusFront;
     }
 
     public function inserir() {
