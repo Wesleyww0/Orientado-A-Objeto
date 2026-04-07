@@ -1,0 +1,303 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Mapa Da Sala
+meta:
+  id: wrk_8bb39ccf14234a3cb04b8f6a90a887bf
+  created: 1773744622309
+  modified: 1773744673156
+  description: ""
+collection:
+  - name: Sala
+    meta:
+      id: fld_b993366095be46baa18be6b8a89b04ac
+      created: 1773744714076
+      modified: 1775514255796
+      sortKey: -1773744714076
+      description: ""
+    children:
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Sala/inserir
+        name: inserir
+        meta:
+          id: req_56f456fa576a4ff39144d68501ec94dd
+          created: 1773744726607
+          modified: 1775596954474
+          isPrivate: false
+          description: ""
+          sortKey: -1774892765156
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "9",
+            	"descricao" : "5",
+            	"andar" : "2d",
+            	"capacidade" : "500"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Sala/consultar
+        name: consultar
+        meta:
+          id: req_b32c89b17930422e8f5645c841260bc9
+          created: 1774881287114
+          modified: 1775514327831
+          isPrivate: false
+          description: ""
+          sortKey: -1774892765106
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "17",
+            	"descricao" : "",
+            	"andar" : "",
+            	"capacidade" : ""
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Sala/desativar
+        name: desativar
+        meta:
+          id: req_43c203f43a994575b0f925880ed464e1
+          created: 1774892765056
+          modified: 1774892858474
+          isPrivate: false
+          description: ""
+          sortKey: -1774892765056
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "15"	
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Sala/alterar
+        name: alterar
+        meta:
+          id: req_7077aed8543d47c3a02e300ccbfd0e80
+          created: 1775514301925
+          modified: 1775514329308
+          isPrivate: false
+          description: ""
+          sortKey: -1774892765081
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "17",
+            	"descricao" : "ss",
+            	"andar" : "",
+            	"capacidade" : ""
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Horário
+    meta:
+      id: fld_c209b868a198466e8619f0cbe0c4320f
+      created: 1775514272112
+      modified: 1775514272112
+      sortKey: -1775514272112
+      description: ""
+    children:
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Horario/alterar
+        name: alterar
+        meta:
+          id: req_e8fb73a1f9d44fae89bf5a9e4dea64af
+          created: 1774892039652
+          modified: 1775598041695
+          isPrivate: false
+          description: ""
+          sortKey: -1775514296525
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "10",
+            	"descricao" : "dsd",
+            	"horaInicial" : "",
+            	"horaFinal" : ""
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Horario/desativar
+        name: desativar
+        meta:
+          id: req_143e4dc35c234d579bbdb4e69787a77a
+          created: 1775514286578
+          modified: 1775598050052
+          isPrivate: false
+          description: ""
+          sortKey: -1775514296425
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "10"	
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Horario/consultar
+        name: consultar
+        meta:
+          id: req_f0876e88daae48a0a1382ee6d638f01f
+          created: 1775514311774
+          modified: 1775598061449
+          isPrivate: false
+          description: ""
+          sortKey: -1775514296625
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"codigo" : "10",
+            	"descricao" : "",
+            	"horaInicial" : "",
+            	"horaFinal" : ""
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost/DesenvolvimentoParaServidores/AtividadeMapa/Horario/inserir
+        name: inserir
+        meta:
+          id: req_b9da7a0318134d5890291dcb08259564
+          created: 1775514318813
+          modified: 1775598020737
+          isPrivate: false
+          description: ""
+          sortKey: -1775514296725
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"descricao" : "tard",
+            	"horaInicial" : "09:00",
+            	"horaFinal" : "12:00"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_b8d47d1d62663e6ba2bfd5173f439ae67ef682a9
+    created: 1773744622313
+    modified: 1773744622313
+environments:
+  name: Base Environment
+  meta:
+    id: env_b8d47d1d62663e6ba2bfd5173f439ae67ef682a9
+    created: 1773744622311
+    modified: 1773744622311
+    isPrivate: false
