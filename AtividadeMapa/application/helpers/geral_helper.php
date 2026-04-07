@@ -119,4 +119,33 @@ function validarDadosConsulta($valor, $tipo){
     // Valor default da variável $retorno caso não ocorra erro
     return array('codigoHelper' => 0, 'msg' => 'Validação correta.');
 }
+
+
+/*
+    Função para verificar se datas ou horários iniciais são maiores
+    entre eles
+    */
+    function compararDataHora($valorInicial, $valorFinal, $tipo) {
+        // Passamos a string para hora
+        $valorInicial = strtotime($valorInicial);
+        $valorFinal = strtotime($valorFinal);
+
+        if ($valorInicial != '' && $valorFinal != ''){
+            if ($valorInicial > $valorFinal) {
+                switch ($tipo) {
+                    case 'hora':
+                        return array('codigoHelper' => 13, 'msg' => 'Hora Final menor que a Hora Inicial.');
+                        break;
+                    case 'data':
+                        return array('codigoHelper' => 14, 'msg' => 'Data Final menor que a Data Inicial.');
+                        break;
+                    default:
+                        return array('codigoHelper' => 97, 'msg' => 'Tipo de verificação não definida.');
+                }
+            }
+        }
+
+        // Valor default da variável $retorno caso não ocorra erro
+        return array('codigoHelper' => 0, 'msg' => 'Validação correta.');
+    }
 ?>
