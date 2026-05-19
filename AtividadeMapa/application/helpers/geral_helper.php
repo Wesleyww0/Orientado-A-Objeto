@@ -153,6 +153,16 @@ function validarDadosConsulta($valor, $tipo){
     /*
 Função para verificar se o CPF é válido quanto a sua estrutura
 */
+// =============================================================================
+// FUNÇÃO: validarCPF
+// Função para verificar se o CPF é válido quanto a sua estrutura.
+//
+// Códigos de retorno (codigoHelper):
+//  0  - CPF válido
+//  15 - CPF com menos de 11 dígitos
+//  16 - CPF com todos os dígitos iguais
+//  17 - CPF com dígitos verificadores incorretos
+// =============================================================================
 function validarCPF($cpf) {
     // Remove tudo que não for número
     $cpf = preg_replace('/[^0-9]/', '', $cpf);
