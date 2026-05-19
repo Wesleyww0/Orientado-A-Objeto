@@ -59,7 +59,7 @@ class M_sala extends CI_Model
     }
 
     //Metodo privado, pois sera auxiliar nesta classe
-    private function consultaSala($codigo)
+    public function consultaSala($codigo)
     {
         try {
             //query p consultar dados de aconrdo com os parametros passados

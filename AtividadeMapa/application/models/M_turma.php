@@ -51,7 +51,7 @@ public function consultar($codigo, $descricao, $capacidade, $dataInicio)
         //Query para consultar dados de acordo com parâmetros passados
         $sql = "select codigo, descricao, capacidade, dataInicio,
         date_format(dataInicio, '%d-%m-%y') dataInicioBr
-        from tbl_turma where status = '' ";
+        from tbl_turma where estatus = '' ";
 
         if (trim($codigo) != '') {
             $sql = $sql . " and codigo = $codigo ";
@@ -160,7 +160,7 @@ return $dados;
         }
     }
 
-    private function consultaTurmaCod($codigo)
+    public function consultaTurmaCod($codigo)
     {
         try {
             $sql = "SELECT * FROM tbl_turma WHERE codigo = $codigo";
@@ -169,7 +169,7 @@ return $dados;
             if ($retorno->num_rows() > 0) {
                 $linha = $retorno->row();
 
-                if (trim($linha->status) == "D") {
+                if (trim($linha->estatus) == "D") {
                     return ['codigo' => 9, 'msg' => 'Turma desativada.'];
                 }
 
