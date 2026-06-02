@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login - Sistema Mapa de Sala</title>
-    <link rel="icon" href="../../AtividadeMapa/assets/img/icone_fatecSP.ico" type="image/x-icon">
+    <link rel="icon" href="../AtividadeMapa/assets/img/icone_fatecSR.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../../AtividadeMapa/assets/css/reset.css">
-    <link rel="stylesheet" href="../../AtividadeMapa/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../AtividadeMapa/assets/css/styleCadastro.css">
-    <link rel="stylesheet" href="../../AtividadeMapa/assets/css/stylePassword.css">
+    <link rel="stylesheet" href="../AtividadeMapa/assets/css/reset.css">
+    <link rel="stylesheet" href="../AtividadeMapa/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../AtividadeMapa/assets/css/styleCadastro.css">
+    <link rel="stylesheet" href="../AtividadeMapa/assets/css/stylePassword.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
@@ -22,7 +22,7 @@
 <body>
     <div class="container">
         <div class="text-center">
-            <img src="../../AtividadeMapa/assets/img/logo_fatecSP.png" alt="Logo da Empresa" style="max-width: 200px;
+            <img src="../AtividadeMapa/assets/img/logo_fatecSR.png" alt="Logo da Empresa" style="max-width: 200px;
                 margin-bottom: 20px;">
         </div>
         <div class="panel-body">
@@ -48,9 +48,9 @@
 
 </body>
 
-<script src="../../AtividadeMapa/assets/js/jquery-3.6.0.min.js"></script>
-<script src="../../AtividadeMapa/assets/js/bootstrap.min.js"></script>
-<script src="../../AtividadeMapa/assets/js/sweetalert2.all.min.js"></script>
+<script src="../AtividadeMapa/assets/js/jquery-3.6.0.min.js"></script>
+<script src="../AtividadeMapa/assets/js/bootstrap.min.js"></script>
+<script src="../AtividadeMapa/assets/js/sweetalert2.all.min.js"></script>
 
 <script>
     async function validaLogin() {
@@ -58,8 +58,9 @@
         try {
             const usuario = document.getElementById('txtUsuario').value;
             const senha = document.getElementById('txtSenha').value;
-            const base_url = "functionUrl";
-            return `${base_url}/login`;
+            const base_url = function(url=''){
+            return "<?= base_url()?>"+url
+            }
 
             const response = await fetch('Usuarios/logar', {
                 method: 'POST',
@@ -80,7 +81,7 @@
 
                 // Atualizar a tabela
                 window.location.href = base_url("funcoes/indexPagina")
-                
+
             } else {
                 // 1. Mapeia e junta as mensagens de erro em um bloco HTML
                 const mensagensDeErro = result.erros.map(erro => {
