@@ -62,7 +62,7 @@
             return "<?= base_url()?>"+url
             }
 
-            const response = await fetch('Usuarios/logar', {
+            const response = await fetch(base_url('Usuario/logar'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -80,7 +80,7 @@
                 Swal.fire('Sucesso!', result.msg, 'success');
 
                 // Atualizar a tabela
-                window.location.href = base_url("funcoes/indexPagina")
+                window.location.href = base_url("Funcoes/indexPagina")
 
             } else {
                 // 1. Mapeia e junta as mensagens de erro em um bloco HTML
