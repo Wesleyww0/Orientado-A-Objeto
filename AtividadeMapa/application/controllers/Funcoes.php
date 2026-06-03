@@ -4,7 +4,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Funcoes extends CI_Controller {
 
     public function index(){
-        $this->load->view('login');
+        $this->load->view('Login');
+    }
+
+    public function indexPagina(){
+        $this->load->view('index');
+    }
+
+    public function abreSala(){
+        $this->load->view('sala');
+    }
+
+    public function abreProfessor(){
+        $this->load->view('professor');
+    }
+
+
+
+    public function encerraSistema(){
+        // Redireciona o usuário para a página de login
+        header('Location: ' . base_url());
     }
 }
 

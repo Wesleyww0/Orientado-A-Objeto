@@ -25,7 +25,7 @@ class M_usuario extends CI_Model {
             if ($retornoUsuario['codigo'] == 4) {
                 // Query de inserção dos dados
                 $this->db->query("INSERT INTO tbl_usuario (nome, email, usuario, senha)
-                                  VALUES ('$nome', '$email', '$usuario', md5('$senha'))");
+                                  VALUES ('$nome', '$email', '$usuario', '$senha')"); // adicionar o md5 na senha dps.. pois esta dando problema aqui na escola - md5('$senha') -
 
                 // Verificar se a inserção ocorreu com sucesso
                 if ($this->db->affected_rows() > 0) {
@@ -134,7 +134,7 @@ class M_usuario extends CI_Model {
                 }
 
                 if ($senha !== '') {
-                    $partes[] = "senha = md5('$senha')";
+                    $partes[] = "senha = '$senha'"; // md5('$senha')"
                 }
 
                 // Termino a concatenação da query
@@ -308,7 +308,7 @@ class M_usuario extends CI_Model {
             // para verificar se está deletado virtualmente ou não.
             $retorno = $this->db->query("SELECT * FROM tbl_usuario
                                          WHERE usuario = '$usuario'
-                                         AND   senha   = md5('$senha')");
+                                         AND   senha   = '$senha'"); // md5('$senha')"
 
             // Verifica se a quantidade de linhas trazidas na consulta é superior a 0
             // Vinculamos o resultado da query para tratarmos o resultado do status
