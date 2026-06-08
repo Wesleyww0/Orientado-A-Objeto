@@ -19,6 +19,10 @@ class Funcoes extends CI_Controller {
         $this->load->view('professor');
     }
 
+    public function abreTurma(){
+        $this->load->view('turma');
+    }
+
 
 
     public function encerraSistema(){
