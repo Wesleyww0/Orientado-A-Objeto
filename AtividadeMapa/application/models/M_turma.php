@@ -50,7 +50,7 @@ public function consultar($codigo, $descricao, $capacidade, $dataInicio)
     try {
         //Query para consultar dados de acordo com parâmetros passados
         $sql = "select codigo, descricao, capacidade, dataInicio,
-        date_format(dataInicio, '%d-%m-%y') dataInicioBr
+        date_format(dataInicio, '%d-%m-%Y') dataInicioBr
         from tbl_turma where estatus = '' ";
 
         if (trim($codigo) != '') {
@@ -119,21 +119,50 @@ return $dados;
 
                 $query .= implode(", ", $updates) . " WHERE codigo = $codigo";
 
+                //prepara os valores para binding
+                $params = [];
+                if($descricao !== '') {
+                    $params[] = $descricao;
+                }
+                if($capacidade !== '') {
+                    $params[] = $capacidade;
+                }
+                if($dataInicio !== '') {
+                    $params[] = $dataInicio;
+                }
+                $params[] = $codigo;
+
+                //executa a query                
                 $this->db->query($query);
 
+                //verifica se a atualização foi bem sucedida
+
                 if ($this->db->affected_rows() > 0) {
-                    return ['codigo' => 1, 'msg' => 'Turma atualizada corretamente.'];
+                    $dados = array(
+                        'codigo' => 1, 
+                        'msg' => 'Turma atualizada corretamente.'
+                    );                
                 } else {
-                    return ['codigo' => 8, 'msg' => 'Erro ao atualizar turma.'];
-                }
+                    $dados = array(
+                        'codigo' => 8, 
+                        'msg' => 'Houve algum erro na atualização da tabela da turma'
+                    );  
+                } 
 
             } else {
-                return $retornoConsulta;
+                $dados = array(
+                    'codigo' => 5, 
+                    'msg' => 'Turma não cadastrada no sistema'
+                );  
             }
 
         } catch (Exception $e) {
-            return ['codigo' => 0, 'msg' => $e->getMessage()];
+            $dados = array(
+                'codigo' => 00, 
+                'msg' => 'ATENÇÃO: o seguinte erro aconteceu -> ' . $e->getMessage()
+            );  
         }
+        return $dados;
     }
 
     public function desativar($codigo)
