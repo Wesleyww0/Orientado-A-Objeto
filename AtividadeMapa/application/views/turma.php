@@ -83,7 +83,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formCadastroTurma" method="post" class="modal-content" onsubmit="cadastro(event);">
+                        <form id="formCadastroTurma" method="post" class="modal-content">
                             <div class="modal-body">
                                 <div class="form-group row">
                                     <div class="col-sm-6">
@@ -102,7 +102,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btnAcao" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btnAcao">Cadastrar</button>
+                                <button type="submit" class="btn btnAcao" onclick="cadastro();">Cadastrar</button>
                             </div>
                         </form>
                     </div>
@@ -119,7 +119,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formEditTurma" method="post" onsubmit="editarTurma(event);">
+                        <form id="formEditTurma" method="post">
                             <div class="modal-body">
                                 <input type="hidden" id="editId" name="editId">
                                 <div class="form-group row">                            
@@ -139,7 +139,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btnAcao" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btnAcao">Salvar</button>
+                                <button type="submit" class="btn btnAcao" onclick="editarTurma()">Salvar</button>
                             </div>
                         </form>
                     </div>
@@ -175,7 +175,7 @@
 
     <script>
         // Adicionado o parâmetro 'event' recebido do formulário
-        async function cadastro(event) {
+        async function cadastro() {
             event.preventDefault();                
             const descricao = document.getElementById('descricao').value;
             const capacidade = document.getElementById('capacidade').value;
@@ -197,17 +197,26 @@
                 const result = await response.json();
 
                 if (result.codigo == 1) {
+                    // fechar o modal
                     $('#cadastroTurmaModal').modal('hide');
+
+                    // mostra msg de sucesso opcional
                     Swal.fire('Sucesso!', result.msg, 'success');
+
+                    // atualiza os dados
                     carregarDados();
+
                 } else {
+                    // mapeia e junta as msg de erro em um bloco de html
                     const mensagensDeErro = result.erros.map(erro => {
+                        // ultilizamos a tag <p> para garantir q cd erro fique em uma linha
                         return `<p><strong>[${erro.campo ?? erro.codigo}]</strong> ${erro.msg}</p>`;
                     }).join('');
 
+                    // 2  chama o swal.fire  usando a  propriedade 'html'
                     Swal.fire({
                         title: 'Houve(ram) erro(s) de validação:',
-                        html: mensagensDeErro,
+                        html: mensagensDeErro, //  usamos o 'html'  p exibir as  tags <p> e <stromg>
                         icon: 'error',
                         confirmButtonText: 'Fechar'
                     });
@@ -234,10 +243,15 @@
                 });
 
                 const data = await response.json();
+
                 const conteudoAcesso = document.getElementById('conteudo-Turma');
+
+                // limpar a tabela antes de prerencher nvs dados
                 conteudoAcesso.innerHTML = '';
 
+                //preencher a tabela cm os dados recebidos
                 data.dados.forEach(item => {
+
                     conteudoAcesso.innerHTML += `
                         <tr class="alert alert-warning">
                             <td>${item.codigo}</td>
@@ -247,14 +261,15 @@
                             <td style="display:none">${item.dataInicio}</td>
                             <td>
                                 <div class="row">
-                                    <button class="btn btn-warning btnAcao" onclick="openEditModal(this)">
+                                    <button class="btn btn-warning btnAcao" onclick="openEditModal(${item.codigo}, this)">
                                         <i class="fas fa-pencil"></i>
                                     </button>
-                                    <button class="btn btn-danger btnAcao btnAcaoExcluir" onclick="deletarTurma(event, ${item.codigo})">
+                                    <button class="btn btn-danger btnAcao btnAcaoExcluir" onclick="deletarTurma(${item.codigo})">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
                             </td>
+                            
                         </tr>`;
                 });
 
@@ -263,14 +278,17 @@
             }
         }
 
-        carregarDados();
-
+        $(document).ready(function() {
+            carregarDados();
+       
         $('#cadastroTurmaModal').on('show.bs.modal', function() {
             $('#formCadastroTurma')[0].reset();
         });
+    });
 
         function openEditModal(button) {
             const row = button.closest('tr');
+
             const codigo = row.cells[0].innerText; 
             const descricao = row.cells[1].innerText;
             const capacidade = row.cells[2].innerText;
@@ -285,7 +303,7 @@
         }
 
         // Adicionado o parâmetro 'event' recebido do formulário
-        async function editarTurma(event) {
+        async function editarTurma() {
             event.preventDefault();
             try {
                 const codigo = document.getElementById('editId').value;
@@ -330,8 +348,8 @@
             }
         }
 
-        async function deletarTurma(event, codigo) {
-            event.preventDefault();
+        async function deletarTurma(codigo) {  
+            event.preventDefault();          
             Swal.fire({
                 title: 'Atenção!',
                 text: 'Tem certeza que deseja remover essa Turma?',
@@ -349,9 +367,10 @@
             }).then(async function(res) {
                 if (res.isConfirmed) {
                     const config = {
-                        method: 'post',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ codigo: codigo })
+                        method: 'post',                        
+                        body: JSON.stringify({
+                             codigo: codigo 
+                        })
                     };
 
                     const request = await fetch('../Turma/desativar', config);
@@ -383,13 +402,13 @@
             for (let i = 0; i < linhas.length; i++) {
                 const colDescricao = linhas[i].getElementsByTagName("td")[1]; 
                 const colCapacidade = linhas[i].getElementsByTagName("td")[2]; 
-                const colDataini = linhas[i].getElementsByTagName("td")[3]; 
+                const colDataIni = linhas[i].getElementsByTagName("td")[3]; 
 
                 
                 if (colDescricao) { 
                     const capacidadeTexto = colCapacidade.textContent || colCapacidade.innerText;
                     const descricaoTexto = colDescricao.textContent || colDescricao.innerText;
-                    const dataIniTexto = colDataini.textContent || colDataini.innerText;
+                    const dataIniTexto = colDataIni.textContent || colDataIni.innerText;
                     
                     if ((descricaoTexto.toLowerCase().indexOf(filter) > -1) || 
                         (capacidadeTexto.toLowerCase().indexOf(filter) > -1) ||
