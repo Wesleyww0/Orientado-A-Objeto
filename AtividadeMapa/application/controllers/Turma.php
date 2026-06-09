@@ -141,12 +141,14 @@ class Turma extends CI_Controller {
                 }
             }
         } catch (Exception $e) {
-            $erros[] = ['codigo' => 0, 'msg' => 'Erro inesperado: ' . $e->getMessage()];
+            $erros[] = ['codigo' => 0, 
+                        'msg' => 'Erro inesperado: ' . $e->getMessage()];
         }
 
         // Monta retorno único
         if ($sucesso == true) {
-            $retorno = ['sucesso' => $sucesso, 'codigo' => $resBanco['codigo'],
+            $retorno = ['sucesso' => $sucesso, 
+                        'codigo' => $resBanco['codigo'],
                         'msg' => $resBanco['msg']];
         } else {
             $retorno = ['sucesso' => $sucesso, 'erros' => $erros];
@@ -421,8 +423,8 @@ class Turma extends CI_Controller {
                 'sucesso' => $sucesso,
                 'erros' => $erros
             ];
+            
         }
-
         echo json_encode($retorno);
     }
 }
