@@ -18,6 +18,7 @@
         .navbar-nav {
             width: 100%;
             display: flex;
+            
             justify-content: space-around;
         }
         
@@ -52,7 +53,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="../funcoes/abreSala">Sala de Aula</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../funcoes/abreProfessor">Docente</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../funcoes/abreTurma">Docente</a></li>
                     <li class="nav-item"><a class="nav-link" href="../funcoes/abreTurma">Turma</a></li>
                     <li class="nav-item"><a class="nav-link" href="../funcoes/abrePeriodo">Período</a></li>
                     <li class="nav-item"><a class="nav-link" href="../funcoes/abreMapa">Reservas</a></li>
@@ -122,24 +123,28 @@
                         <form id="formEditTurma" method="post">
                             <div class="modal-body">
                                 <input type="hidden" id="editId" name="editId">
-                                <div class="form-group row">                            
+                                <div class="form-group">
+                                    <label for="editdescricao">descricao</label>
+                                    <input type="text" id="editdescricao" name="editdescricao" class="form-control" required>
+                                </div>
+                                <div class="form-group row">
                                     <div class="col-sm-6">
-                                        <label for="editDescricao">Descrição</label>
-                                        <input type="text" id="editDescricao" name="editDescricao" class="form-control" required>
+                                        <label for="editcapacidade" class="col-form-label">capacidade</label>
+                                        <input type="number" id="editcapacidade" name="editcapacidade" class="form-control" required>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="editCapacidade">Capacidade</label>
-                                        <input type="number" id="editCapacidade" name="editCapacidade" class="form-control" required>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="editDataInicio">Data de Inicio</label>
-                                        <input type="date" id="editDataInicio" name="editDataInicio" class="form-control" required>
+                                        <label for="editdataInicio" class="col-form-label">dataInicio</label>
+                                        <select name="editdataInicio" id="editdataInicio" class="form-control" required>
+                                            <option value="">Selecione</option>
+                                            <option value="F">Funcionário</option>
+                                            <option value="C">Carta Convite</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btnAcao" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btnAcao" onclick="editarTurma()">Salvar</button>
+                                <button type="submit" class="btn btnAcao" onclick="editarTurma();">Salvar</button>
                             </div>
                         </form>
                     </div>
@@ -152,11 +157,10 @@
                 <table class="table table-condensed table-hover">
                     <thead>
                         <tr>
-                            <th>Turma</th>
-                            <th>Descrição</th>
+                            <th>Docente</th>
                             <th>Capacidade</th>
                             <th>Data de Inicio</th>
-                            <th>Ações</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody id="conteudo-Turma">
@@ -167,21 +171,22 @@
     </main>
 
     <footer>
-    </footer>
+        </footer>
 
     <script src="../assets/js/jquery-3.6.0.min.js" type="text/javascript"></script>
     <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../assets/js/sweetalert2.all.min.js" type="text/javascript"></script>
 
     <script>
-        // Adicionado o parâmetro 'event' recebido do formulário
         async function cadastro() {
-            event.preventDefault();                
-            const descricao = document.getElementById('descricao').value;
-            const capacidade = document.getElementById('capacidade').value;
-            const dataInicio = document.getElementById('dataInicio').value;
-
+            event.preventDefault();
             try {
+                event.preventDefault();
+                const descricao = document.getElementById('descricao').value;
+                const capacidade = document.getElementById('capacidade').value;
+                const dataInicio = document.getElementById('dataInicio').value;
+
+
                 const response = await fetch('../Turma/inserir', {
                     method: 'POST',
                     headers: {
@@ -197,38 +202,35 @@
                 const result = await response.json();
 
                 if (result.codigo == 1) {
-                    // fechar o modal
                     $('#cadastroTurmaModal').modal('hide');
-
-                    // mostra msg de sucesso opcional
                     Swal.fire('Sucesso!', result.msg, 'success');
 
-                    // atualiza os dados
+                    // Atualizar a tabela
                     carregarDados();
-
                 } else {
-                    // mapeia e junta as msg de erro em um bloco de html
+                    // 1. Mapeia e junta as mensagens de erro em um bloco HTML
                     const mensagensDeErro = result.erros.map(erro => {
-                        // ultilizamos a tag <p> para garantir q cd erro fique em uma linha
+                        // Utilizamos a tag <p> para garantir que cada erro fique em uma linha separada no SweetAlert
                         return `<p><strong>[${erro.campo ?? erro.codigo}]</strong> ${erro.msg}</p>`;
                     }).join('');
 
-                    // 2  chama o swal.fire  usando a  propriedade 'html'
+                    // 2. Chama o Swal.fire usando a propriedade 'html'
                     Swal.fire({
                         title: 'Houve(ram) erro(s) de validação:',
-                        html: mensagensDeErro, //  usamos o 'html'  p exibir as  tags <p> e <stromg>
+                        html: mensagensDeErro, // Usamos 'html' para exibir as tags <p> e <strong>
                         icon: 'error',
                         confirmButtonText: 'Fechar'
                     });
                 }
             } catch (error) {
-                console.error('Erro ao cadastrar a turma:', error);
+                console.error('Erro ao cadastrar o Turma:', error);
                 Swal.fire('Erro', 'Ocorreu um erro ao processar a requisição.', 'error');
             }
         }
 
         async function carregarDados() {
             try {
+
                 const response = await fetch('../Turma/consultar', {
                     method: 'POST',
                     headers: {
@@ -243,25 +245,28 @@
                 });
 
                 const data = await response.json();
-
                 const conteudoAcesso = document.getElementById('conteudo-Turma');
 
-                // limpar a tabela antes de prerencher nvs dados
+                // Limpar a tabela antes de preencher com novos dados
                 conteudoAcesso.innerHTML = '';
 
-                //preencher a tabela cm os dados recebidos
+                // Preencher a tabela com os dados recebidos
                 data.dados.forEach(item => {
-
+                    dataInicio = item.dataInicio;
+                    if (dataInicio == 'F') {
+                        dataInicio = 'Funcionário'
+                    } else {
+                        dataInicio = 'Carta Convite'
+                    }
+                    codigo = item.codigo;
                     conteudoAcesso.innerHTML += `
                         <tr class="alert alert-warning">
-                            <td>${item.codigo}</td>
                             <td>${item.descricao}</td>
                             <td>${item.capacidade}</td>
-                            <td>${item.dataIniciobra}</td>
-                            <td style="display:none">${item.dataInicio}</td>
+                            <td>${dataInicio}</td>
                             <td>
                                 <div class="row">
-                                    <button class="btn btn-warning btnAcao" onclick="openEditModal(this)">
+                                    <button class="btn btn-warning btnAcao" onclick="openEditModal(${item.codigo}, this)">
                                         <i class="fas fa-pencil"></i>
                                     </button>
                                     <button class="btn btn-danger btnAcao btnAcaoExcluir" onclick="deletarTurma(${item.codigo})">
@@ -269,7 +274,6 @@
                                     </button>
                                 </div>
                             </td>
-                            
                         </tr>`;
                 });
 
@@ -278,38 +282,38 @@
             }
         }
 
-        $(document).ready(function() {
-            carregarDados();
-       
+        carregarDados();
+
         $('#cadastroTurmaModal').on('show.bs.modal', function() {
             $('#formCadastroTurma')[0].reset();
         });
-    });
 
-        function openEditModal(button) {
+        function openEditModal(codigo, button) {
+            // A linha do botão clicado
             const row = button.closest('tr');
+            // Pegar os dados da linha
+            const descricao = row.cells[0].innerText;
+            const capacidade = row.cells[1].innerText;
+            const dataInicio = row.cells[2].innerText.charAt(0);
 
-            const codigo = row.cells[0].innerText; 
-            const descricao = row.cells[1].innerText;
-            const capacidade = row.cells[2].innerText;
-            const dataInicio = row.cells[4].innerText; // Resgata o formato AAAA-MM-DD invisível
-
+            // Preenche o modal com os dados do Turma
             document.getElementById('editId').value = codigo;
-            document.getElementById('editDescricao').value = descricao;
-            document.getElementById('editCapacidade').value = capacidade;
-            document.getElementById('editDataInicio').value = dataInicio;
+            document.getElementById('editdescricao').value = descricao;
+            document.getElementById('editcapacidade').value = capacidade;
+            document.getElementById('editdataInicio').value = dataInicio;
 
+            // Abre o modal
             $('#editModal').modal('show');
         }
 
-        
         async function editarTurma() {
             event.preventDefault();
             try {
                 const codigo = document.getElementById('editId').value;
-                const descricao = document.getElementById('editDescricao').value;
-                const capacidade = document.getElementById('editCapacidade').value;
-                const dataInicio = document.getElementById('editDataInicio').value;
+                const descricao = document.getElementById('editdescricao').value;
+                const capacidade = document.getElementById('editcapacidade').value;
+                const dataInicio = document.getElementById('editdataInicio').value;
+
 
                 const response = await fetch('../Turma/alterar', {
                     method: 'POST',
@@ -327,35 +331,41 @@
                 const result = await response.json();
 
                 if (result.codigo == 1) {
+                    // Fechar o modal
                     $('#editModal').modal('hide');
+
+                    // Mostrar uma mensagem de sucesso (opcional)
                     Swal.fire('Sucesso!', result.msg, 'success');
+
                     carregarDados();
                 } else {
+                    // 1. Mapeia e junta as mensagens de erro em um bloco HTML
                     const mensagensDeErro = result.erros.map(erro => {
+                        // Utilizamos a tag <p> para garantir que cada erro fique em uma linha separada no SweetAlert
                         return `<p><strong>[${erro.campo ?? erro.codigo}]</strong> ${erro.msg}</p>`;
                     }).join('');
 
+                    // 2. Chama o Swal.fire usando a propriedade 'html'
                     Swal.fire({
                         title: 'Houve(ram) erro(s) de validação:',
-                        html: mensagensDeErro,
+                        html: mensagensDeErro, // Usamos 'html' para exibir as tags <p> e <strong>
                         icon: 'error',
                         confirmButtonText: 'Fechar'
                     });
                 }
-                $('#CadastroTurmaModal').modal('hide');
-                carregarDados();
-                
+                $('#cadastroTurmaModal').modal('hide');
+                carregarDados(); // Atualiza a tabela com os novos dados
             } catch (error) {
-                console.error('Erro ao editar a turma:', error);
+                console.error('Erro ao cadastrar o Turma:', error);
                 Swal.fire('Erro', 'Ocorreu um erro ao processar a requisição.', 'error');
             }
         }
 
-        async function deletarTurma(codigo) {  
-            event.preventDefault();          
+        async function deletarTurma(codigo) {
+            event.preventDefault();
             Swal.fire({
                 title: 'Atenção!',
-                text: 'Tem certeza que deseja remover essa Turma?',
+                text: 'Tem certeza que deseja remover esse Turma?',
                 icon: 'question',
                 showConfirmButton: true,
                 showCancelButton: true,
@@ -370,9 +380,9 @@
             }).then(async function(res) {
                 if (res.isConfirmed) {
                     const config = {
-                        method: 'post',                        
+                        method: 'post',
                         body: JSON.stringify({
-                             codigo: codigo 
+                            codigo: codigo
                         })
                     };
 
@@ -401,24 +411,20 @@
             const filter = input.value.toLowerCase();
             const tabela = document.getElementById("conteudo-Turma");
             const linhas = tabela.getElementsByTagName("tr");
-            
             for (let i = 0; i < linhas.length; i++) {
-                const colDescricao = linhas[i].getElementsByTagName("td")[1]; 
-                const colCapacidade = linhas[i].getElementsByTagName("td")[2]; 
-                const colDataIni = linhas[i].getElementsByTagName("td")[3]; 
+                const colTurma = linhas[i].getElementsByTagName("td")[0]; // Coluna do descricao do Turma
+                const colcapacidade = linhas[i].getElementsByTagName("td")[1]; // Coluna do dataInicio do capacidade
+                const coldataInicio = linhas[i].getElementsByTagName("td")[2]; // Coluna do dataInicio do Turma
 
-                
-                if (colDescricao) { 
-                    const capacidadeTexto = colCapacidade.textContent || colCapacidade.innerText;
-                    const descricaoTexto = colDescricao.textContent || colDescricao.innerText;
-                    const dataIniTexto = colDataIni.textContent || colDataIni.innerText;
-                    
-                    if ((descricaoTexto.toLowerCase().indexOf(filter) > -1) || 
-                        (capacidadeTexto.toLowerCase().indexOf(filter) > -1) ||
-                        (dataIniTexto.toLowerCase().indexOf(filter) > -1) ) {
-                        linhas[i].style.display = ""; 
+                if (colTurma) { // Verifica se as colunas existem
+                    const TurmaTexto = colTurma.textContent || colTurma.innerText;
+                    const dataInicioTexto = coldataInicio.textContent || coldataInicio.innerText;
+                    const capacidadeTexto = colcapacidade.textContent || colcapacidade.innerText;
+                    // Verifica se o filtro corresponde ao descricao do Turma ou ao capacidade
+                    if ((TurmaTexto.toLowerCase().indexOf(filter) > -1) || (dataInicioTexto.toLowerCase().indexOf(filter) > -1)) {
+                        linhas[i].style.display = ""; // Exibe a linha
                     } else {
-                        linhas[i].style.display = "none"; 
+                        linhas[i].style.display = "none"; // Oculta a linha
                     }
                 }
             }
