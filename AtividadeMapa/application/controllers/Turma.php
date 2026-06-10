@@ -91,7 +91,8 @@ class Turma extends CI_Controller {
 
             if (verificarParam($resultado, $lista) != 1) {
                 // Validar vindos de forma correta do frontend (Helper)
-                $erros[] = ['codigo' => 99, 'msg' => 'Campos inexistentes ou incorretos no FrontEnd.'];
+                $erros[] = ['codigo' => 99, 'msg' => 'Campos inexistentes ou incorretos no 
+                                                      FrontEnd.'];
             }else{
                 // Validar campos quanto ao tipo de dado e tamanho (Helper)
                 $retornoDescricao = validarDados($resultado->descricao,'string',true);
@@ -324,7 +325,6 @@ class Turma extends CI_Controller {
                         $this->setDataInicio($resultado-> dataInicio);
 
                         $this->load->model('M_turma');
-
                         $resBanco = $this->M_turma->alterar($this->getCodigo(),
                                                             $this->getDescricao(),
                                                             $this->getCapacidade(),

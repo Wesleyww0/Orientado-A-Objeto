@@ -209,12 +209,12 @@ public function alterar($codigo, $descricao, $capacidade, $dataInicio)
         return $dados;
     }
 
-    public function desativar($codigo)
-    {
-        try { // veridica se a turma ja esta cadastrada
+    public function desativar($codigo){
+        try { 
+            // veridica se a turma ja esta cadastrada
             $retornoConsulta = $this->consultaTurmaCod($codigo);
 
-            if ($retornoConsulta['codigo'] == 10) {
+            if ($retornoConsulta['codigo'] == 1) {
                 // query de atualização de dados
                 $this->db->query("updatee tbl_turma set estatus = 'D' 
                                   where codigo = $codigo");
