@@ -49,7 +49,7 @@ public function consultar($codigo, $descricao, $capacidade, $dataInicio)
 {
     try {
         //Query para consultar dados de acordo com parâmetros passados
-        $sql = "select codigo, descricao, capacidade, dataInicio,
+        $sql = "select codigo, descricao, capacidade,
         date_format(dataInicio, '%d-%m-%Y') dataIniciobra
         from tbl_turma where estatus = '' ";
 
@@ -98,74 +98,80 @@ return $dados;
 }  
 
 public function alterar($codigo, $descricao, $capacidade, $dataInicio)
-    {
-        try {
-            $retornoConsulta = $this->consultaTurmaCod($codigo);
+{
+    try {
+        $retornoConsulta = $this->consultaTurmaCod($codigo);
 
-            if ($retornoConsulta['codigo'] == 10) {
+        if ($retornoConsulta['codigo'] == 10) {
 
-                $query = "UPDATE tbl_turma SET ";
-                $updates = [];
+            $query = "UPDATE tbl_turma SET ";
+            $updates = [];
+            $params = [];
 
-                if ($descricao != '') {
-                    $updates[] = "descricao = '$descricao'";
-                }
-
-                if ($capacidade != '') {
-                    $updates[] = "capacidade = $capacidade";
-                }
-
-                if ($dataInicio != '') {
-                    $updates[] = "dataInicio = '$dataInicio'";
-                }
-
-                $query .= implode(", ", $updates) . " WHERE codigo = $codigo";
-
-                //prepara os valores para binding
-                $params = [];
-                if($descricao !== '') {
-                    $params[] = $descricao;
-                }
-                if($capacidade !== '') {
-                    $params[] = $capacidade;
-                }
-                if($dataInicio !== '') {
-                    $params[] = $dataInicio;
-                }
-                $params[] = $codigo;
-
-                //executa a query                
-                $this->db->query($query, $params);
-
-                //verifica se a atualização foi bem sucedida
-
-                if ($this->db->affected_rows() > 0) {
-                    $dados = array(
-                        'codigo' => 1, 
-                        'msg' => 'Turma atualizada corretamente.'
-                    );                
-                } else {
-                    $dados = array(
-                        'codigo' => 8, 
-                        'msg' => 'Houve algum erro na atualização da tabela da turma'
-                    );  
-                } 
-
-            } else {
-                $dados = array(
-                    'codigo' => 5, 
-                    'msg' => 'Turma não cadastrada no sistema'
-                );  
+            // Monta os campos usando '?' para o Binding seguro
+            if ($descricao != '') {
+                $updates[] = "descricao = ?";
+                $params[] = $descricao;
             }
 
-        } catch (Exception $e) {
+            if ($capacidade != '') {
+                $updates[] = "capacidade = ?";
+                $params[] = $capacidade;
+            }
+
+            if ($dataInicio != '') {
+                $updates[] = "dataInicio = ?";
+                $params[] = $dataInicio;
+            }
+
+            // Se nenhum campo foi alterado, evita rodar query vazia
+            if (empty($updates)) {
+                return array(
+                    'codigo' => 8,
+                    'msg' => 'Nenhum dado foi informado para alteração.'
+                );
+            }
+
+            // Junta as partes da query
+            $query .= implode(", ", $updates) . " WHERE codigo = ?";
+            
+            // O código precisa ser o último parâmetro do array por causa do WHERE
+            $params[] = $codigo;
+
+            // Executa a query de forma segura
+            $this->db->query($query, $params);
+
+            // Verifica se a atualização alterou alguma linha
+            // Atenção: se salvar sem mudar nada, affected_rows pode ser 0. 
+            // Se quiser que passe mesmo sem mudar valores, use >= 0
+            if ($this->db->affected_rows() >= 0) {
+                $dados = array(
+                    'codigo' => 1, 
+                    'msg' => 'Turma atualizada corretamente.'
+                );                
+            } else {
+                $dados = array(
+                    'codigo' => 8, 
+                    'msg' => 'Houve algum erro na atualização da tabela da turma'
+                );  
+            } 
+
+        } else {
             $dados = array(
-                'codigo' => 00, 
-                'msg' => 'ATENÇÃO: o seguinte erro aconteceu -> ' . $e->getMessage()
+                'codigo' => 5, 
+                'msg' => 'Turma não cadastrada no sistema'
             );  
         }
-        return $dados;
+
+    } catch (Exception $e) {
+        $dados = array(
+            'codigo' => 0, 
+            'msg' => 'ATENÇÃO: o seguinte erro aconteceu -> ' . $e->getMessage()
+        );  
     }
+    return $dados;
+}
+
 
     private function consultaTurmaCod($codigo)
     {
@@ -214,9 +220,9 @@ public function alterar($codigo, $descricao, $capacidade, $dataInicio)
             // veridica se a turma ja esta cadastrada
             $retornoConsulta = $this->consultaTurmaCod($codigo);
 
-            if ($retornoConsulta['codigo'] == 1) {
+            if ($retornoConsulta['codigo'] == 10) {
                 // query de atualização de dados
-                $this->db->query("updatee tbl_turma set estatus = 'D' 
+                $this->db->query("update tbl_turma set estatus = 'D' 
                                   where codigo = $codigo");
                // verifica se a tualização ocorreu com sucesso
                 if ($this->db->affected_rows() > 0) {
