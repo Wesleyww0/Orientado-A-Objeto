@@ -23,6 +23,14 @@ class Funcoes extends CI_Controller {
         $this->load->view('turma');
     }
 
+    public function abrePeriodo(){
+        $this->load->view('periodo');
+    }
+
+    public function abreMapa(){
+        $this->load->view('mapa');
+    }
+
 
 
     public function encerraSistema(){
