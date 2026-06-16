@@ -49,8 +49,8 @@ public function consultar($codigo, $descricao, $capacidade, $dataInicio)
 {
     try {
         //Query para consultar dados de acordo com parâmetros passados
-        $sql = "select codigo, descricao, capacidade, dataInicio,
-        date_format(dataInicio, '%d-%m-%y') dataInicioBr
+        $sql = "select codigo, descricao, capacidade,
+        date_format(dataInicio, '%d-%m-%Y') dataIniciobra
         from tbl_turma where estatus = '' ";
 
         if (trim($codigo) != '') {
@@ -95,91 +95,165 @@ public function consultar($codigo, $descricao, $capacidade, $dataInicio)
 //Envia o array $dados com as informações tratadas
 //acima pela estrutura de decisão if
 return $dados;
-}  public function alterar($codigo, $descricao, $capacidade, $dataInicio)
-    {
-        try {
-            $retornoConsulta = $this->consultaTurmaCod($codigo);
+}  
 
-            if ($retornoConsulta['codigo'] == 10) {
+public function alterar($codigo, $descricao, $capacidade, $dataInicio)
+{
+    try {
+        $retornoConsulta = $this->consultaTurmaCod($codigo);
 
-                $query = "UPDATE tbl_turma SET ";
-                $updates = [];
+        if ($retornoConsulta['codigo'] == 10) {
 
-                if ($descricao != "") {
-                    $updates[] = "descricao = '$descricao'";
-                }
+            $query = "UPDATE tbl_turma SET ";
+            $updates = [];
+            $params = [];
 
-                if ($capacidade != "") {
-                    $updates[] = "capacidade = $capacidade";
-                }
-
-                if ($dataInicio != "") {
-                    $updates[] = "dataInicio = '$dataInicio'";
-                }
-
-                $query .= implode(", ", $updates) . " WHERE codigo = $codigo";
-
-                $this->db->query($query);
-
-                if ($this->db->affected_rows() > 0) {
-                    return ['codigo' => 1, 'msg' => 'Turma atualizada corretamente.'];
-                } else {
-                    return ['codigo' => 8, 'msg' => 'Erro ao atualizar turma.'];
-                }
-
-            } else {
-                return $retornoConsulta;
+            // Monta os campos usando '?' para o Binding seguro
+            if ($descricao != '') {
+                $updates[] = "descricao = ?";
+                $params[] = $descricao;
             }
 
-        } catch (Exception $e) {
-            return ['codigo' => 0, 'msg' => $e->getMessage()];
-        }
-    }
-
-    public function desativar($codigo)
-    {
-        try {
-            $retornoConsulta = $this->consultaTurmaCod($codigo);
-
-            if ($retornoConsulta['codigo'] == 10) {
-
-                $this->db->query("UPDATE tbl_turma SET status = 'D' WHERE codigo = $codigo");
-
-                if ($this->db->affected_rows() > 0) {
-                    return ['codigo' => 1, 'msg' => 'Turma desativada corretamente.'];
-                } else {
-                    return ['codigo' => 8, 'msg' => 'Erro ao desativar turma.'];
-                }
-
-            } else {
-                return $retornoConsulta;
+            if ($capacidade != '') {
+                $updates[] = "capacidade = ?";
+                $params[] = $capacidade;
             }
 
-        } catch (Exception $e) {
-            return ['codigo' => 0, 'msg' => $e->getMessage()];
+            if ($dataInicio != '') {
+                $updates[] = "dataInicio = ?";
+                $params[] = $dataInicio;
+            }
+
+            // Se nenhum campo foi alterado, evita rodar query vazia
+            if (empty($updates)) {
+                return array(
+                    'codigo' => 8,
+                    'msg' => 'Nenhum dado foi informado para alteração.'
+                );
+            }
+
+            // Junta as partes da query
+            $query .= implode(", ", $updates) . " WHERE codigo = ?";
+            
+            // O código precisa ser o último parâmetro do array por causa do WHERE
+            $params[] = $codigo;
+
+            // Executa a query de forma segura
+            $this->db->query($query, $params);
+
+            // Verifica se a atualização alterou alguma linha
+            // Atenção: se salvar sem mudar nada, affected_rows pode ser 0. 
+            // Se quiser que passe mesmo sem mudar valores, use >= 0
+            if ($this->db->affected_rows() >= 0) {
+                $dados = array(
+                    'codigo' => 1, 
+                    'msg' => 'Turma atualizada corretamente.'
+                );                
+            } else {
+                $dados = array(
+                    'codigo' => 8, 
+                    'msg' => 'Houve algum erro na atualização da tabela da turma'
+                );  
+            } 
+
+        } else {
+            $dados = array(
+                'codigo' => 5, 
+                'msg' => 'Turma não cadastrada no sistema'
+            );  
         }
+
+    } catch (Exception $e) {
+        $dados = array(
+            'codigo' => 0, 
+            'msg' => 'ATENÇÃO: o seguinte erro aconteceu -> ' . $e->getMessage()
+        );  
     }
+    return $dados;
+}
+
 
     public function consultaTurmaCod($codigo)
     {
         try {
-            $sql = "SELECT * FROM tbl_turma WHERE codigo = $codigo";
-            $retorno = $this->db->query($sql);
+            // query para consultar dados de acordo com parametros passados
+            $sql = "select * from tbl_turma where codigo = $codigo";
 
-            if ($retorno->num_rows() > 0) {
-                $linha = $retorno->row();
+            $retornoTurma = $this->db->query($sql);
 
+            // verificar se a consulta ocorreu com sucesso
+            if ($retornoTurma->num_rows() > 0) {
+                $linha = $retornoTurma->row();
                 if (trim($linha->estatus) == "D") {
-                    return ['codigo' => 9, 'msg' => 'Turma desativada.'];
+                    $dados = array(
+                        'codigo' => 9, 
+                        'msg' => 'Turma desativada no sistema'
+                    );  
+                }else{
+                    $dados = array(
+                        'codigo' => 10, 
+                        'msg' => 'Consulta efetuada com sucesso'
+                    );  
                 }
 
-                return ['codigo' => 10, 'msg' => 'OK'];
+                
+            } else{
+                $dados = array(
+                    'codigo' => 12, 
+                    'msg' => 'Turma não encontrada'
+                );  
+    
             }
 
-            return ['codigo' => 12, 'msg' => 'Turma não encontrada.'];
+           
+        } catch (Exception $e) {
+            $dados = array(
+                'codigo' => 00, 
+                'msg' => 'ATENÇÃO: o seguinte erro aconteceu -> ' . $e->getMessage()
+            );  
+        }
+        return $dados;
+    }
+
+    public function desativar($codigo){
+        try { 
+            // veridica se a turma ja esta cadastrada
+            $retornoConsulta = $this->consultaTurmaCod($codigo);
+
+            if ($retornoConsulta['codigo'] == 10) {
+                // query de atualização de dados
+                $this->db->query("update tbl_turma set estatus = 'D' 
+                                  where codigo = $codigo");
+               // verifica se a tualização ocorreu com sucesso
+                if ($this->db->affected_rows() > 0) {
+                   $dados = array(
+                    'codigo' => 1, 
+                    'msg' => 'Turma desativada corretamente.'
+                );
+
+                } else {
+                    $dados = array(
+                        'codigo' => 8, 
+                        'msg' => 'Houve algum problema na desativação da turma.'
+                    );
+                }
+
+            } else {
+                $dados = array(
+                    'codigo' => $retornoConsulta ['codigo'], 
+                    'msg' => $retornoConsulta ['msg']
+                );
+            }
 
         } catch (Exception $e) {
-            return ['codigo' => 0, 'msg' => $e->getMessage()];
+            $dados = array(
+                'codigo' => 00, 
+                'msg' => 'Atenção o seguinte erro aconteceu ->' . $e->getMessage()
+            );
         }
+         // envia o array dados construido a cima
+        return $dados;
     }
+
+    
 }
