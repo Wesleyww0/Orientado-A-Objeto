@@ -71,7 +71,7 @@ class Turma extends CI_Controller {
 
     public function setEstatus($estatusFront)
     {
-        $this->tipoUsuario = $estatusFront;
+        $this->tipoEstatus = $estatusFront;
     }
 
     public function inserir() {
@@ -91,7 +91,8 @@ class Turma extends CI_Controller {
 
             if (verificarParam($resultado, $lista) != 1) {
                 // Validar vindos de forma correta do frontend (Helper)
-                $erros[] = ['codigo' => 99, 'msg' => 'Campos inexistentes ou incorretos no FrontEnd.'];
+                $erros[] = ['codigo' => 99, 'msg' => 'Campos inexistentes ou incorretos no 
+                                                      FrontEnd.'];
             }else{
                 // Validar campos quanto ao tipo de dado e tamanho (Helper)
                 $retornoDescricao = validarDados($resultado->descricao,'string',true);
@@ -112,7 +113,7 @@ class Turma extends CI_Controller {
 
                 if($retornoDataInicio['codigoHelper'] != 0){
                     $erros[] = ['codigo' => $retornoDataInicio['codigoHelper'],
-                                'campo' => 'Andar',
+                                'campo' => 'DataInicio',
                                 'msg' => $retornoDataInicio['msg']];
                 }
 
@@ -141,12 +142,14 @@ class Turma extends CI_Controller {
                 }
             }
         } catch (Exception $e) {
-            $erros[] = ['codigo' => 0, 'msg' => 'Erro inesperado: ' . $e->getMessage()];
+            $erros[] = ['codigo' => 0, 
+                        'msg' => 'Erro inesperado: ' . $e->getMessage()];
         }
 
         // Monta retorno único
         if ($sucesso == true) {
-            $retorno = ['sucesso' => $sucesso, 'codigo' => $resBanco['codigo'],
+            $retorno = ['sucesso' => $sucesso, 
+                        'codigo' => $resBanco['codigo'],
                         'msg' => $resBanco['msg']];
         } else {
             $retorno = ['sucesso' => $sucesso, 'erros' => $erros];
@@ -202,7 +205,7 @@ class Turma extends CI_Controller {
 
                 if($retornoDataInicio['codigoHelper'] != 0){
                     $erros[] = ['codigo' => $retornoDataInicio['codigoHelper'],
-                                'campo' => 'Andar',
+                                'campo' => 'DataInicio',
                                 'msg' => $retornoDataInicio['msg']];
                 }
 
@@ -214,11 +217,10 @@ class Turma extends CI_Controller {
                     $this->setDataInicio($resultado->dataInicio);
 
                     $this->load->model('M_turma');
-                    $resBanco = $this->M_turma->consultar(
-                        $this->getCodigo(),
-                        $this->getDescricao(),
-                        $this->getCapacidade(),
-                        $this->getDataInicio());
+                    $resBanco = $this->M_turma->consultar( $this->getCodigo(),
+                                                           $this->getDescricao(),
+                                                           $this->getCapacidade(),
+                                                           $this->getDataInicio());
 
                     if ($resBanco['codigo'] == 1) {
                         $sucesso = true;
@@ -311,25 +313,30 @@ class Turma extends CI_Controller {
                     if ($retornoDataInicio['codigoHelper'] != 0) {
                         $erros[] = [
                             'codigo' => $retornoDataInicio['codigoHelper'],
-                            'campo' => 'Data Inicio',
+                            'campo' => 'DataInicio',
                             'msg' => $retornoDataInicio['msg']
                         ];
                     }
 
                     if (empty($erros)) {
-                        $this->load->model('M_turma');
+                        $this->setCodigo($resultado->codigo);
+                        $this->setDescricao($resultado->descricao);
+                        $this->setCapacidade($resultado->capacidade);
+                        $this->setDataInicio($resultado-> dataInicio);
 
-                        $resBanco = $this->M_turma->alterar(
-                            $resultado->codigo,
-                            $resultado->descricao,
-                            $resultado->capacidade,
-                            $resultado->dataInicio
-                        );
+                        $this->load->model('M_turma');
+                        $resBanco = $this->M_turma->alterar($this->getCodigo(),
+                                                            $this->getDescricao(),
+                                                            $this->getCapacidade(),
+                                                            $this->getDataInicio());
 
                         if ($resBanco['codigo'] == 1) {
                             $sucesso = true;
                         } else {
-                            $erros[] = $resBanco;
+                            $erros[] = [
+                                'codigo' => $resBanco['codigo'],
+                                'msg' => $resBanco['msg']
+                            ];
                         }
                     }
                 }
@@ -339,19 +346,21 @@ class Turma extends CI_Controller {
             $erros[] = ['codigo' => 0, 'msg' => 'Erro inesperado: ' . $e->getMessage()];
         }
 
-        if ($sucesso) {
+        // monta retorno unico
+        if ($sucesso == true) {
             $retorno = [
-                'sucesso' => true,
+                'sucesso' => $sucesso,
                 'codigo' => $resBanco['codigo'],
                 'msg' => $resBanco['msg']
             ];
         } else {
             $retorno = [
-                'sucesso' => false,
+                'sucesso' => $sucesso,
                 'erros' => $erros
             ];
         }
 
+        //transforma o array em json
         echo json_encode($retorno);
     }
 
@@ -380,15 +389,20 @@ class Turma extends CI_Controller {
                     ];
                 }
 
+                // se n encontrarb erros
                 if (empty($erros)) {
-                    $this->load->model('M_turma');
+                    $this-> setCodigo($resultado->codigo);
 
-                    $resBanco = $this->M_turma->desativar($resultado->codigo);
+                    $this->load->model('M_turma');
+                    $resBanco = $this->M_turma->desativar($this->getCodigo());
 
                     if ($resBanco['codigo'] == 1) {
                         $sucesso = true;
                     } else {
-                        $erros[] = $resBanco;
+                        $erros[] = [
+                            'codigo' => $resBanco['codigo'],
+                            'msg' => $resBanco['msg']
+                        ];
                     }
                 }
             }
@@ -397,19 +411,20 @@ class Turma extends CI_Controller {
             $erros[] = ['codigo' => 0, 'msg' => 'Erro inesperado: ' . $e->getMessage()];
         }
 
-        if ($sucesso) {
+        // monta retorno unico
+        if ($sucesso == true) {
             $retorno = [
-                'sucesso' => true,
+                'sucesso' => $sucesso,
                 'codigo' => $resBanco['codigo'],
                 'msg' => $resBanco['msg']
             ];
         } else {
             $retorno = [
-                'sucesso' => false,
+                'sucesso' => $sucesso,
                 'erros' => $erros
             ];
+            
         }
-
         echo json_encode($retorno);
     }
 }
