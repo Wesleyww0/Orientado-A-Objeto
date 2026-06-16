@@ -31,13 +31,10 @@ class Funcoes extends CI_Controller {
         $this->load->view('mapa');
     }
 
-<<<<<<< HEAD
     public function abreRelatorio(){
         $this->load->view('relatorio');
     }
 
-=======
->>>>>>> 6bed6f30f554aa82a4b774036c1d4c2585ca8ee3
 
 
     public function encerraSistema(){
