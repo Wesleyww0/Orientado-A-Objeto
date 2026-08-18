@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../assets/css/styleCadastro.css">
 
     <title>Mapeamento</title>
-    <link rel="icon" href="../../fatecsrdsii202502/assets/img/icone_fatecSR.ico" type="image/x-icon">
+    <link rel="icon" href="../assets/img/icone_fatecSR.ico" type="image/x-icon">
 
     <style>
         .navbar-nav {
@@ -29,7 +29,7 @@
             display: block;
             color: #ffffff !important;
             font-weight: bold;
-            padding: 0px;
+            padding: 8px;
         }
 
         .nav-link:hover {
@@ -41,7 +41,7 @@
 
 <body>
     <header>
-        <a href="../Funcoes/indexPagina">
+        <a href="../funcoes/indexPagina">
             <h1 id="headerTitle">Mapeamento de Salas</h1>
         </a>
         <nav class="navbar navbar-expand-lg navbar-dark">
@@ -76,7 +76,10 @@
             <div class="modal fade" id="cadastroMapeamentoModal" tabindex="-1" role="dialog"
                 aria-labelledby="cadastroMapeamentoModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6bed6f30f554aa82a4b774036c1d4c2585ca8ee3
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="cadastroMapeamentoModalLabel">Cadastrar Nova Reserva</h5>
@@ -105,7 +108,10 @@
                                         </select>
                                     </div>
                                 </div>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6bed6f30f554aa82a4b774036c1d4c2585ca8ee3
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <label for="selectProfessor" class="col-form-label">Docente</label>
@@ -115,6 +121,10 @@
                                         </select>
                                     </div>
                                 </div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6bed6f30f554aa82a4b774036c1d4c2585ca8ee3
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="dataFim" class="col-form-label">Data Final</label>
@@ -138,7 +148,10 @@
                 </div>
             </div>
         </section>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6bed6f30f554aa82a4b774036c1d4c2585ca8ee3
         <section>
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
                 aria-hidden="true">
@@ -160,13 +173,20 @@
                                         <option value="">Selecione uma sala</option>
                                     </select>
                                 </div>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6bed6f30f554aa82a4b774036c1d4c2585ca8ee3
                                 <div class="form-group row">
                                     <label for="editSelectTurma" class="col-form-label">Turma</label>
                                     <select id="editSelectTurma" name="editSelectTurma" class="form-control" required>
                                         <option value="">Selecione uma Turma</option>
                                     </select>
                                 </div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6bed6f30f554aa82a4b774036c1d4c2585ca8ee3
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <label for="editSelectProfessor" class="col-form-label">Professor</label>
@@ -207,6 +227,36 @@
                 <div id="spinner" style="display: none; text-align: center; margin-top: 10px;">
                     <div class="spinner-border text-primary" role="status">
                         <span class="sr-only">Carregando...</span>
+<<<<<<< HEAD
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>Sala</th>
+                        <th>Descrição da Sala</th>
+                        <th>Turma</th>
+                        <th>Docente</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="conteudo-Mapeamento">
+                    <!---->
+                </tbody>
+            </table>
+            </div>
+        </section>
+
+
+    </main>
+    <footer>
+        <!---->
+    </footer>
+=======
                         </div>
                 </div>
 
@@ -233,6 +283,7 @@
     <footer>
         <!-- roda pé pode seguir os estilos  do CSS ja definidos para umas aparencia coerente-->
         </footer>
+>>>>>>> 6bed6f30f554aa82a4b774036c1d4c2585ca8ee3
 
     <script src="../assets/js/jquery-3.6.0.min.js" type="text/javascript"></script>
     <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
@@ -317,7 +368,7 @@
                 const data = await response.json();
 
                 const conteudoAcesso = document.getElementById('conteudo-Mapeamento');
-                conteudoAcesso.innerHTML = ""; // Limpa o conteúdo existente
+                conteudoAcesso.innerHTML = ''; // Limpa o conteúdo existente
 
                 if (data && Array.isArray(data.dados) && data.dados.length > 0) {
                     const fragmento = document.createDocumentFragment();
@@ -326,31 +377,32 @@
                         const linha = document.createElement('tr');
                         linha.classList.add('alert', 'alert-warning');
                         linha.innerHTML = `
-                            <td style="display:none"><input type="checkbox" class="selecionar-item" value="${item.codigo}"></td>
-                            <td>${item.sala}</td>
-                            <td>${item.descsala}</td>
-                            <td>${item.descturma}</td>
-                            <td style="display:none">${item.codigo_turma}</td>
-                            <td>${item.nome_professor}</td>
-                            <td style="display:none">${item.codigo_professor}</td>
-                            <td>${item.datareservabra}</td>
-                            <td style="display:none">${item.datareserva}</td>
-                            <td>${item.deshorario}</td>
-                            <td style="display:none">${item.codigo_horario}</td> 
-                            <td>
-                                <div class="row">
-                                    <div id="btnEditModal" style="display: flex; gap: 10px; align-items: center;">
-                                        <button class="btn btn-warning btnAcao" onclick="openEditModal(this, ${item.codigo})">
-                                            <i class="fas fa-pencil"></i>
-                                        </button>
-                                    </div>
-                                    <button class="btn btn-danger btnAcao btnAcaoExcluir" onclick="deletarMapeamento(${item.codigo})">
-                                        <i class="fas fa-trash"></i>
+                        <td style="display:none"><input type="checkbox" class="selecionar-item" value="${item.codigo}"></td>
+                        <td>${item.sala}</td>
+                        <td>${item.descsala}</td>
+                        <td>${item.descturma}</td>
+                        <td style="display:none">${item.codigo_turma}</td>
+                        <td>${item.nome_professor}</td>
+                        <td style="display:none">${item.codigo_professor}</td>
+                        <td>${item.datareservabra}</td>
+                        <td style="display:none">${item.datareserva}</td>
+                        <td>${item.deshorario}</td>
+                        <td style="display:none">${item.codigo_horario}</td>
+                        <td>
+                            <div class="row">
+                                <div id="btnEditModal" style="display: flex; gap: 10px; align-items: center;">
+                                    <button class="btn btn-warning btnAcao" onclick="openEditModal(this, ${item.codigo})">
+                                        <i class="fas fa-pencil"></i>
                                     </button>
                                 </div>
-                            </td>`;
+                                <button class="btn btn-danger btnAcao btnAcaoExcluir" onclick="deletarMapeamento(${item.codigo})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>`;
                         fragmento.appendChild(linha);
                     });
+
                     conteudoAcesso.appendChild(fragmento);
                 } else {
                     conteudoAcesso.innerHTML = '<tr><td colspan="10">Nenhum dado encontrado.</td></tr>';
@@ -391,8 +443,7 @@
             const dataMapeamento = row.cells[8].innerText; // Data
             const horario = row.cells[10].innerText; // Horário
             document.getElementById('editId').value = codigo;
-
-            // Preenche o modal com os dados da Mapeamento
+            // Preenche o modal com os dados de Mapeamento
             document.getElementById('editSelectSalas').value = sala;
             document.getElementById('editSelectTurma').value = turma;
             document.getElementById('editSelectProfessor').value = professor;
@@ -462,6 +513,8 @@
             }
         }
 
+
+
         async function deletarMapeamentoMultiplos(codigos) {
             Swal.fire({
                 title: 'Atenção!',
@@ -512,68 +565,68 @@
             });
         }
 
-async function deletarMapeamento(codigo) {
-    Swal.fire({
-        title: 'Atenção!',
-        text: 'Tem certeza que deseja remover essa Mapeamento?',
-        icon: 'question',
-        showConfirmButton: true,
-        showCancelButton: true,
-        customClass: {
-            popup: 'my-swal-popup',
-            title: 'my-swal-title',
-            html: 'my-swal-text',
-            confirmButton: 'btn btn-danger btnAcao my-swal-button',
-            cancelButton: 'btn btn-secondary btnAcao my-swal-button',
-        },
-        buttonsStyling: false
-    }).then(async function(res) {
-        if (res.isConfirmed) {
-            const config = {
-                method: 'post',
-                body: JSON.stringify({
-                    codigo: codigo
-                })
-            };
-
-            const request = await fetch('../Mapa/desativar', config);
-            const response = await request.json();
-
+        async function deletarMapeamento(codigo) {
             Swal.fire({
                 title: 'Atenção!',
-                text: response.msg,
-                icon: response.codigo == 1 ? 'success' : 'error',
+                text: 'Tem certeza que deseja remover esse Mapeamento?',
+                icon: 'question',
+                showConfirmButton: true,
+                showCancelButton: true,
                 customClass: {
                     popup: 'my-swal-popup',
                     title: 'my-swal-title',
                     html: 'my-swal-text',
-                    confirmButton: 'btn btn-primary btnAcao',
+                    confirmButton: 'btn btn-danger btnAcao my-swal-button',
+                    cancelButton: 'btn btn-secondary btnAcao my-swal-button',
                 },
                 buttonsStyling: false
+            }).then(async function(res) {
+                if (res.isConfirmed) {
+                    const config = {
+                        method: 'post',
+                        body: JSON.stringify({
+                            codigo: codigo
+                        })
+                    };
+
+                    const request = await fetch('../Mapa/desativar', config);
+                    const response = await request.json();
+
+                    Swal.fire({
+                        title: 'Atenção!',
+                        text: response.msg,
+                        icon: response.codigo == 1 ? 'success' : 'error',
+                        customClass: {
+                            popup: 'my-swal-popup',
+                            title: 'my-swal-title',
+                            html: 'my-swal-text',
+                            confirmButton: 'btn btn-primary btnAcao',
+                        },
+                        buttonsStyling: false
+                    });
+                    carregarDados();
+                }
             });
-            carregarDados();
         }
-    });
-}
 
-function filtrarTabela() {
-    const input = document.getElementById("inputPesquisa");
-    const filter = input.value.trim().toLowerCase();
-    const tabela = document.getElementById("conteudo-Mapeamento");
-    const linhas = tabela.getElementsByTagName("tr");
+        function filtrarTabela() {
+            const input = document.getElementById("inputPesquisa");
+            const filter = input.value.trim().toLowerCase();
+            const tabela = document.getElementById("conteudo-Mapeamento");
+            const linhas = tabela.getElementsByTagName("tr");
 
-    for (let linha of linhas) {
-        const celulas = linha.getElementsByTagName("td");
+            for (let linha of linhas) {
+                const celulas = linha.getElementsByTagName("td");
 
-        if (celulas.length > 0) {
-            const conteudoLinha = Array.from(celulas)
-                .map(celula => celula.textContent.trim().toLowerCase())
-                .join(" ");
+                if (celulas.length > 0) {
+                    const conteudoLinha = Array.from(celulas)
+                        .map(celula => celula.textContent.trim().toLowerCase())
+                        .join(" ");
 
-            linha.style.display = conteudoLinha.includes(filter) ? "" : "none";
+                    linha.style.display = conteudoLinha.includes(filter) ? "" : "none";
+                }
+            }
         }
-    }
-}
 
         $(document).ready(function() {
             // Faz a requisição para listar as salas
@@ -623,25 +676,56 @@ function filtrarTabela() {
                     capacidade: ''
                 }),
                 success: function(retorno) {
-                        // Popula o select com as salas recebidas
-                        if (retorno.codigo == 1) {
-                            $.each(retorno.dados, function(index, item) {
-                                $('#editSelectSalas').append($('<option>', {
-                                    value: item.codigo,
-                                    text: item.codigo + " - " + item.descricao // ou qualquer atributo que você deseja mostrar
-                                }));
-                            });
-                        } else {
-                            $('#editSelectSalas').append('<option value="">Nenhuma sala cadastrada</option>');
-                        }
-                    },
-                    error: function() {
-                        alert('Erro ao carregar as salas.');
+                    // Popula o select com as salas recebidas
+                    if (retorno.codigo == 1) {
+                        $.each(retorno.dados, function(index, item) {
+                            $('#editSelectSalas').append($('<option>', {
+                                value: item.codigo,
+                                text: item.codigo + " - " + item.descricao // ou qualquer atributo que você deseja mostrar
+                            }));
+                        });
+                    } else {
+                        $('#editSelectSalas').append('<option value="">Nenhuma sala cadastrada</option>');
                     }
-                });
-            
+                },
+                error: function() {
+                    alert('Erro ao carregar as salas.');
+                }
+            });
 
             // Faz a requisição para listar os professores
+            $.ajax({
+                url: '../Professor/consultar', // URL para chamar o método listar no controlador
+                method: 'POST',
+                dataType: 'json',
+                // 1. INFORMA O TIPO DE DADO QUE ESTÁ SENDO ENVIADO
+                contentType: 'application/json',
+                // 2. ENVIA DADOS EM FORMATO JSON (Mesmo que sejam vazios, para satisfazer o backend)
+                data: JSON.stringify({
+                    codigo: '',
+                    nome: '',
+                    cpf: '',
+                    tipo: ''
+                }),
+                success: function(retorno) {
+                    // Popula o select com os professores recebidos
+                    if (retorno.codigo == 1) {
+                        $.each(retorno.dados, function(index, item) {
+                            $('#selectProfessor').append($('<option>', {
+                                value: item.codigo,
+                                text: item.nome // ou qualquer atributo que você deseja mostrar
+                            }));
+                        });
+                    } else {
+                        $('#selectProfessor').append('<option value="">Nenhun professor cadastrado</option>');
+                    }
+                },
+                error: function() {
+                    alert('Erro ao carregar informações.');
+                }
+            });
+
+            // Faz a requisição para listar os professores em edição
             $.ajax({
                 url: '../Professor/consultar', // URL para chamar o método listar no controlador
                 method: 'POST',
@@ -659,115 +743,83 @@ function filtrarTabela() {
                     // Popula o select com aos professores recebidos
                     if (retorno.codigo == 1) {
                         $.each(retorno.dados, function(index, item) {
-                            $('#selectProfessor').append($('<option>', {
+                            $('#editSelectProfessor').append($('<option>', {
                                 value: item.codigo,
                                 text: item.nome // ou qualquer atributo que você deseja mostrar
                             }));
                         });
                     } else {
-                        $('#selectProfessor').append('<option value="">Nenhum professor cadastrado</option>');
+                        $('#editSelectProfessor').append('<option value="">Nenhum professor cadastrado</option>');
                     }
-            },
-            error: function() {
-                alert('Erro ao carregar informações.');
-            }
-        });
-
-        // Faz a requisição para listar os professores em edição
-        $.ajax({
-            url: '../Professor/consultar', // URL para chamar o método listar no controlador
-            method: 'POST',
-            dataType: 'json',
-            // 1. INFORMA O TIPO DE DADO QUE ESTÁ SENDO ENVIADO
-            contentType: 'application/json',
-            // 2. ENVIA DADOS EM FORMATO JSON (Mesmo que sejam vazios, para satisfazer o backend)
-            data: JSON.stringify({
-                codigo: '',
-                nome: '',
-                cpf: '',
-                tipo: ''
-            }),
-            success: function(retorno) {
-                // Popula o select com aos professores recebidos
-                if (retorno.codigo == 1) {
-                    $.each(retorno.dados, function(index, item) {
-                        $('#editSelectProfessor').append($('<option>', {
-                            value: item.codigo,
-                            text: item.nome // ou qualquer atributo que você deseja mostrar
-                        }));
-                    });
-                } else {
-                    $('#editSelectProfessor').append('<option value="">Nenhum professor cadastrado</option>');
+                },
+                error: function() {
+                    alert('Erro ao carregar informações.');
                 }
-            },
-            error: function() {
-                alert('Erro ao carregar informações.');
-            }
-        });
+            });
 
-    // Faz a requisição para listar as turmas
-    $.ajax({
-        url: '../Turma/consultar', // URL para chamar o método listar no controlador
-        method: 'POST',
-        dataType: 'json',
-        // 1. INFORMA O TIPO DE DADO QUE ESTÁ SENDO ENVIADO
-        contentType: 'application/json',
-        // 2. ENVIA DADOS EM FORMATO JSON (Mesmo que sejam vazios, para satisfazer o backend)
-        data: JSON.stringify({
-            codigo: '',
-            descricao: '',
-            capacidade: '',
-            dataInicio: ''
-        }),
-        success: function(retorno) {
-                // Popula o select com as turmas recebidas
-                if (retorno.codigo == 1) {
-                    $.each(retorno.dados, function(index, item) {
-                        $('#selectTurma').append($('<option>', {
-                            value: item.codigo,
-                            text: item.descricao // ou qualquer atributo que você deseja mostrar
-                        }));
-                    });
-                } else {
-                    $('#selectTurma').append('<option value="">Nenhuma turma cadastrada</option>');
+            // Faz a requisição para listar as turmas
+            $.ajax({
+                url: '../Turma/consultar', // URL para chamar o método listar no controlador
+                method: 'POST',
+                dataType: 'json',
+                // 1. INFORMA O TIPO DE DADO QUE ESTÁ SENDO ENVIADO
+                contentType: 'application/json',
+                // 2. ENVIA DADOS EM FORMATO JSON (Mesmo que sejam vazios, para satisfazer o backend)
+                data: JSON.stringify({
+                    codigo: '',
+                    descricao: '',
+                    capacidade: '',
+                    dataInicio: ''
+                }),
+                success: function(retorno) {
+                    // Popula o select com as turmas recebidas
+                    if (retorno.codigo == 1) {
+                        $.each(retorno.dados, function(index, item) {
+                            $('#selectTurma').append($('<option>', {
+                                value: item.codigo,
+                                text: item.descricao // ou qualquer atributo que você deseja mostrar
+                            }));
+                        });
+                    } else {
+                        $('#selectTurma').append('<option value="">Nenhuma turma cadastrada</option>');
+                    }
+                },
+                error: function() {
+                    alert('Erro ao carregar informações.');
                 }
-            },
-            error: function() {
-                alert('Erro ao carregar informações.');
-            }
-        });
+            });
 
-        // Faz a requisição para listar as turmas em edição
-        $.ajax({
-            url: '../Turma/consultar', // URL para chamar o método listar no controlador
-            method: 'POST',
-            dataType: 'json',
-            // 1. INFORMA O TIPO DE DADO QUE ESTÁ SENDO ENVIADO
-            contentType: 'application/json',
-            // 2. ENVIA DADOS EM FORMATO JSON (Mesmo que sejam vazios, para satisfazer o backend)
-            data: JSON.stringify({
-                codigo: '',
-                descricao: '',
-                capacidade: '',
-                dataInicio: ''
-            }),
-            success: function(retorno) {
-                // Popula o select com as turmas recebidas
-                if (retorno.codigo == 1) {
-                    $.each(retorno.dados, function(index, item) {
-                        $('#editSelectTurma').append($('<option>', {
-                            value: item.codigo,
-                            text: item.descricao // ou qualquer atributo que você deseja mostrar
-                        }));
-                    });
-                } else {
-                    $('#editSelectTurma').append('<option value="">Nenhuma turma cadastrada</option>');
+            // Faz a requisição para listar as turmas em edição
+            $.ajax({
+                url: '../Turma/consultar', // URL para chamar o método listar no controlador
+                method: 'POST',
+                dataType: 'json',
+                // 1. INFORMA O TIPO DE DADO QUE ESTÁ SENDO ENVIADO
+                contentType: 'application/json',
+                // 2. ENVIA DADOS EM FORMATO JSON (Mesmo que sejam vazios, para satisfazer o backend)
+                data: JSON.stringify({
+                    codigo: '',
+                    descricao: '',
+                    capacidade: '',
+                    dataInicio: ''
+                }),
+                success: function(retorno) {
+                    // Popula o select com as turmas recebidas
+                    if (retorno.codigo == 1) {
+                        $.each(retorno.dados, function(index, item) {
+                            $('#editSelectTurma').append($('<option>', {
+                                value: item.codigo,
+                                text: item.descricao // ou qualquer atributo que você deseja mostrar
+                            }));
+                        });
+                    } else {
+                        $('#editSelectTurma').append('<option value="">Nenhuma turma cadastrada</option>');
+                    }
+                },
+                error: function() {
+                    alert('Erro ao carregar informações.');
                 }
-            },
-            error: function() {
-                alert('Erro ao carregar informações.');
-            }
-        });
+            });
 
             // Faz a requisição para listar os horários
             $.ajax({
@@ -793,7 +845,7 @@ function filtrarTabela() {
                             }));
                         });
                     } else {
-                        $('#selectHorario').append('<option value="">Nenum horário cadastrado</option>');
+                        $('#selectHorario').append('<option value="">Nenhum horário cadastrado</option>');
                     }
                 },
                 error: function() {
