@@ -31,6 +31,10 @@ class Funcoes extends CI_Controller {
         $this->load->view('mapa');
     }
 
+    public function abreRelatorio(){
+        $this->load->view('relatorio');
+    }
+
 
 
     public function encerraSistema(){
