@@ -173,7 +173,7 @@ public function alterar($codigo, $descricao, $capacidade, $dataInicio)
 }
 
 
-    public function consultaTurmaCod($codigo)
+    public function consultaTurmaCod($codigo) // RESOLVER A QUESTÃO DO METODO PRIVADO NESSA FUNÇÃO
     {
         try {
             // query para consultar dados de acordo com parametros passados
