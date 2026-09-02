@@ -1,5 +1,4 @@
-import package agenda;
-
+package agenda;
 public class Contato {
     private String nome;
     private String telefone;

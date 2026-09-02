@@ -1,5 +1,4 @@
-import agenda.Agenda;
-import agenda.Contato;
+package agenda;
 import java.util.List;
 
 public class Main {
