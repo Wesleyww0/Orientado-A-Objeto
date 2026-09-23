@@ -1,23 +1,23 @@
 class VeiculoModel {
   int? id;
-  String modelo;
-  String marca;
-  String placa;
+  String nome;
+  String descricao;
+  String categoria;
   double valor;
 
   VeiculoModel({
     this.id,
-    required this.modelo,
-    required this.marca,
-    required this.placa,
+    required this.nome,
+    required this.descricao,
+    required this.categoria,
     required this.valor,
   });
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      'modelo': modelo,
-      'marca': marca,
-      'placa': placa,
+      'nome': nome,
+      'descricao': descricao,
+      'categoria': categoria,
       'valor': valor,
     };
     if (id != null) {
@@ -29,9 +29,9 @@ class VeiculoModel {
   factory VeiculoModel.fromMap(Map<String, dynamic> map) {
     return VeiculoModel(
       id: map['id'],
-      modelo: map['modelo'],
-      marca: map['marca'],
-      placa: map['placa'],
+      nome: map['nome'],
+      descricao: map['descricao'],
+      categoria: map['categoria'],
       valor: map['valor'],
     );
   }
