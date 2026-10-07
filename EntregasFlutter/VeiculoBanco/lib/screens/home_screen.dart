@@ -14,9 +14,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<VeiculoModel> _listarVeiculos = [];
   final VeiculoBanco _db = VeiculoBanco();
 
-  final _modeloController = TextEditingController();
-  final _marcaController = TextEditingController();
-  final _placaController = TextEditingController();
+  final _nomeController = TextEditingController();
+  final _descricaoController = TextEditingController();
+  final _categoriaController = TextEditingController();
   final _valorController = TextEditingController();
 
   @override
@@ -34,14 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _exibirDialogoFormulario({VeiculoModel? veiculo}) {
     if (veiculo != null) {
-      _modeloController.text = veiculo.modelo;
-      _marcaController.text = veiculo.marca;
-      _placaController.text = veiculo.placa;
+      _nomeController.text = veiculo.nome;
+      _descricaoController.text = veiculo.descricao;
+      _categoriaController.text = veiculo.categoria;
       _valorController.text = veiculo.valor.toString();
     } else {
-      _modeloController.clear();
-      _marcaController.clear();
-      _placaController.clear();
+      _nomeController.clear();
+      _descricaoController.clear();
+      _categoriaController.clear();
       _valorController.clear();
     }
 
@@ -55,16 +55,16 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  controller: _modeloController,
-                  decoration: const InputDecoration(labelText: "Modelo"),
+                  controller: _nomeController,
+                  decoration: const InputDecoration(labelText: "nome"),
                 ),
                 TextField(
-                  controller: _marcaController,
-                  decoration: const InputDecoration(labelText: "Marca"),
+                  controller: _descricaoController,
+                  decoration: const InputDecoration(labelText: "descricao"),
                 ),
                 TextField(
-                  controller: _placaController,
-                  decoration: const InputDecoration(labelText: "Placa"),
+                  controller: _categoriaController,
+                  decoration: const InputDecoration(labelText: "categoria"),
                 ),
                 TextField(
                   controller: _valorController,
@@ -81,24 +81,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                String modelo = _modeloController.text;
-                String marca = _marcaController.text;
-                String placa = _placaController.text;
+                String nome = _nomeController.text;
+                String descricao = _descricaoController.text;
+                String categoria = _categoriaController.text;
                 double valor = double.tryParse(_valorController.text) ?? 0.0;
 
                 if (veiculo == null) {
                   await _db.cadastrarVeiculo(
                     VeiculoModel(
-                      modelo: modelo,
-                      marca: marca,
-                      placa: placa,
+                      nome: nome,
+                      descricao: descricao,
+                      categoria: categoria,
                       valor: valor,
                     ),
                   );
                 } else {
-                  veiculo.modelo = modelo;
-                  veiculo.marca = marca;
-                  veiculo.placa = placa;
+                  veiculo.nome = nome;
+                  veiculo.descricao = descricao;
+                  veiculo.categoria = categoria;
                   veiculo.valor = valor;
                   await _db.atualizarVeiculo(veiculo);
                 }
@@ -132,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
           final item = _listarVeiculos[index];
           return ListTile(
             leading: const Icon(Icons.directions_car),
-            title: Text("${item.marca} - ${item.modelo}"),
-            subtitle: Text("Placa: ${item.placa} | Valor: R\$ ${item.valor.toStringAsFixed(2)}"),
+            title: Text("${item.descricao} - ${item.nome}"),
+            subtitle: Text("categoria: ${item.categoria} | Valor: R\$ ${item.valor.toStringAsFixed(2)}"),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
